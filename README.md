@@ -2,7 +2,7 @@
 
 **Multi-Agent AI Equity Research System for Indian NSE Stocks**
 
-Built with [Google ADK](https://google.github.io/adk-docs/) (Agent Development Kit), Gemini, and a real MCP (Model Context Protocol) data server backed by yfinance.
+Built with [Google ADK](https://google.github.io/adk-docs/) (Agent Development Kit), Groq (Llama-3.3-70b via LiteLLM), and a real MCP (Model Context Protocol) data server backed by yfinance.
 
 ---
 
@@ -122,7 +122,7 @@ pip install -r requirements.txt
 ### 3. Configure API Keys
 ```bash
 cp .env.example .env
-# Edit .env and add your GOOGLE_API_KEY (Gemini API key)
+# Edit .env and add your GROQ_API_KEY (Groq API key)
 ```
 
 ### 4. Run via ADK Web UI (recommended for demo)
@@ -148,7 +148,7 @@ python agents/root_agent.py INFY.NS
 pytest tests/test_pipeline.py -v -k "not integration"
 ```
 
-### 7. Run full integration test (requires Gemini API key, ~5 min)
+### 7. Run full integration test (requires Groq API key, ~5 min)
 ```bash
 pytest tests/test_pipeline.py -v -m integration --timeout=300
 ```
@@ -203,7 +203,7 @@ Signals suggest the company maintains operational strength...
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GOOGLE_API_KEY` | **Yes** | Gemini API key (get from https://aistudio.google.com) |
+| `GROQ_API_KEY` | **Yes** | Groq API key (get from https://console.groq.com) |
 | `NEWS_API_KEY` | No | Optional NewsAPI key (yfinance news used as primary; mock used as fallback if both unavailable) |
 
 ---
@@ -212,5 +212,5 @@ Signals suggest the company maintains operational strength...
 
 - **yfinance reliability**: The yfinance library occasionally returns empty data for NSE stocks due to Yahoo Finance API changes. All tools handle this gracefully with clear error messages — the pipeline never crashes on data failures.
 - **News data**: yfinance provides limited news. If no news is returned, a clearly-labelled mock is used so the pipeline can still demonstrate the full workflow.
-- **LLM API costs**: Each pipeline run makes ~7 Gemini API calls. Use `gemini-2.0-flash` (default) to minimise cost.
+- **LLM API costs / limits**: Each pipeline run makes ~7 Groq API calls. The root agent uses staggered delays to stay within the free tier rate limits (6,000 TPM limit).
 - **No ML models**: This system intentionally uses no trained ML models. Technical indicators are computed with deterministic math (pandas/numpy).

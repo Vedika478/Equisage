@@ -18,6 +18,7 @@ specialist pillar reports and produce a coherent, conflict-aware Research Card.
 - **Sentiment Report**: {sentiment_report}
 - **Macro Report**: {macro_report}
 - **Competitive Report**: {competitive_report}
+- **Compliance Feedback from Previous Run**: {compliance_feedback}
 
 ## CRITICAL INSTRUCTIONS
 

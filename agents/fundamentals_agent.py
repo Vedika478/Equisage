@@ -18,7 +18,6 @@ _SKILL_PATH = os.path.join(
 with open(_SKILL_PATH, encoding="utf-8") as f:
     _SKILL_INSTRUCTION = f.read()
 
-# Append state-injection prompt so the agent knows which symbol to analyse
 _INSTRUCTION = _SKILL_INSTRUCTION + """
 
 ---

@@ -75,9 +75,9 @@ class SequentialParallelAgent(ParallelAgent):
                 
                 # Sleep briefly between sub-agents to space out TPM spikes
                 if i < len(self.sub_agents) - 1:
-                    print(f"\n[SequentialParallelAgent] Sleeping 6 seconds before running next pillar agent...")
+                    print(f"\n[SequentialParallelAgent] Sleeping 8 seconds before running next pillar agent...")
                     import asyncio
-                    await asyncio.sleep(6)
+                    await asyncio.sleep(8)
 
         if pause_invocation:
             return
@@ -100,7 +100,115 @@ pillar_analysis = SequentialParallelAgent(
 )
 
 # ---------------------------------------------------------------------------
-# 2. Root — sequential pipeline with staggering
+# 2. LoopAgent for Synthesis and Compliance (Revision loop)
+# ---------------------------------------------------------------------------
+from google.adk.agents.loop_agent import LoopAgent, LoopAgentState
+
+class ComplianceLoopAgent(LoopAgent):
+    """
+    Custom LoopAgent that runs synthesis and compliance agents in a loop.
+    If compliance fails, feedback is written to state and it loops back to synthesis
+    for one revision pass.
+    """
+    @override
+    async def _run_async_impl(
+        self, ctx: InvocationContext
+    ) -> AsyncGenerator[Event, None]:
+        if not self.sub_agents:
+            return
+
+        agent_state = self._load_agent_state(ctx, LoopAgentState)
+        is_resuming_at_current_agent = agent_state is not None
+        times_looped, start_index = self._get_start_state(agent_state)
+
+        should_exit = False
+        pause_invocation = False
+        
+        while (
+            not self.max_iterations or times_looped < self.max_iterations
+        ) and not (should_exit or pause_invocation):
+            
+            for i in range(start_index, len(self.sub_agents)):
+                sub_agent = self.sub_agents[i]
+
+                if ctx.is_resumable and not is_resuming_at_current_agent:
+                    agent_state = LoopAgentState(
+                        current_sub_agent=sub_agent.name,
+                        times_looped=times_looped,
+                    )
+                    ctx.set_agent_state(self.name, agent_state=agent_state)
+                    yield self._create_agent_state_event(ctx)
+
+                is_resuming_at_current_agent = False
+
+                # Stagger execution between loops or sub-agents to avoid Groq TPM errors
+                if i > 0 or times_looped > 0:
+                    print(f"\n[ComplianceLoopAgent] Sleeping 65 seconds before running {sub_agent.name}...")
+                    import asyncio
+                    await asyncio.sleep(65)
+
+                async with Aclosing(sub_agent.run_async(ctx)) as agen:
+                    async for event in agen:
+                        yield event
+                        if ctx.should_pause_invocation(event):
+                            pause_invocation = True
+
+                if pause_invocation:
+                    break
+
+            if pause_invocation:
+                break
+
+            # Check compliance verdict in session state
+            session_state = await ctx.get_session_state()
+            compliance_report_str = session_state.get("compliance_report", "")
+            
+            def check_verdict(text):
+                if not text:
+                    return "FAIL", "No compliance report generated"
+                match = re.search(r"```json\s*(.*?)\s*```", text, re.DOTALL)
+                json_str = match.group(1) if match else text
+                try:
+                    data = json.loads(json_str.strip())
+                    return data.get("verdict", "FAIL"), data.get("reason", "No reason provided")
+                except:
+                    if "PASS" in text.upper() and "FAIL" not in text.upper():
+                        return "PASS", ""
+                    return "FAIL", "Failed to parse compliance response"
+            
+            verdict, reason = check_verdict(compliance_report_str)
+            print(f"\n[ComplianceLoopAgent] Iteration {times_looped + 1} complete. Verdict: {verdict}")
+            
+            if verdict == "PASS":
+                should_exit = True
+            else:
+                feedback = f"Compliance check FAILED on iteration {times_looped + 1} with reason: {reason}. Please revise the Research Card to correct this."
+                print(f"[ComplianceLoopAgent] Setting feedback: {feedback}")
+                await ctx.update_session_state({"compliance_feedback": feedback})
+                
+            if not should_exit:
+                start_index = 0
+                times_looped += 1
+                ctx.reset_sub_agent_states(self.name)
+
+        if pause_invocation:
+            return
+
+        if ctx.is_resumable:
+            ctx.set_agent_state(self.name, end_of_agent=True)
+            yield self._create_agent_state_event(ctx)
+
+synthesis_loop = ComplianceLoopAgent(
+    name="SynthesisLoop",
+    max_iterations=2,  # synthesis + compliance -> revision pass -> final check
+    sub_agents=[
+        synthesis_agent,
+        compliance_agent,
+    ],
+)
+
+# ---------------------------------------------------------------------------
+# 3. Root — sequential pipeline with staggering
 # ---------------------------------------------------------------------------
 from google.adk.agents.sequential_agent import SequentialAgentState, Aclosing
 
@@ -142,13 +250,15 @@ class StaggeredSequentialAgent(SequentialAgent):
             
             # Stagger execution: Sleep if there are more sub-agents to run
             if i < len(self.sub_agents) - 1:
-                print(f"\n[StaggeredSequentialAgent] Sleeping 15 seconds to allow rate limits to decay...")
+                print(f"\n[StaggeredSequentialAgent] Sleeping 65 seconds to allow rate limits to decay...")
                 import asyncio
-                await asyncio.sleep(15)
+                await asyncio.sleep(65)
 
         if ctx.is_resumable:
             ctx.set_agent_state(self.name, end_of_agent=True)
             yield self._create_agent_state_event(ctx)
+
+import re
 
 root_agent = StaggeredSequentialAgent(
     name="EquiSageRoot",
@@ -161,8 +271,7 @@ root_agent = StaggeredSequentialAgent(
     ),
     sub_agents=[
         pillar_analysis,
-        synthesis_agent,
-        compliance_agent,
+        synthesis_loop,
     ],
 )
 
@@ -225,6 +334,7 @@ if __name__ == "__main__":
                 "symbol": symbol,
                 "sector": sector,
                 "peers": peers,
+                "compliance_feedback": "None. This is the first analysis pass."
             },
         )
 
