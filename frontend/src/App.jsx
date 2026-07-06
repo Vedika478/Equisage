@@ -219,7 +219,7 @@ export default function App() {
     if (val.length < 2) { setSuggestions([]); setShowSugg(false); return; }
     if (SUGG_CACHE[val]) { setSuggestions(SUGG_CACHE[val]); setShowSugg(true); return; }
     try {
-      const r = await fetch(`/api/search?q=${encodeURIComponent(val)}`);
+      const r = await fetch(`${import.meta.env.PROD ? "https://shaurya0606-equisage.hf.space" : ""}/api/search?q=${encodeURIComponent(val)}`);
       const d = await r.json();
       const results = d.results || [];
       SUGG_CACHE[val] = results;
@@ -248,7 +248,7 @@ export default function App() {
     const iv = setInterval(() => { mi = Math.min(mi+1, msgs.length-1); setLoadingMsg(msgs[mi]); }, 8000);
 
     try {
-      const res = await fetch("/analyze", {
+      const res = await fetch(`${import.meta.env.PROD ? "https://shaurya0606-equisage.hf.space" : ""}/analyze`, {
         method:"POST", headers:{"Content-Type":"application/json"},
         body:JSON.stringify({ symbol }),
       });
