@@ -29,11 +29,11 @@ CRITICAL tool-calling rules:
 - Your report MUST be extremely concise, structured in brief bullet points, and strictly under 150 words total. Do not write conversational filler or long paragraphs.
 """
 
-from google.adk.models.lite_llm import LiteLlm
+from agents.llm_config import get_robust_llm
 
 competitive_agent = LlmAgent(
     name="CompetitiveAgent",
-    model=LiteLlm(model="groq/llama-3.3-70b-versatile", num_retries=5),
+    model=get_robust_llm(),
     instruction=_INSTRUCTION,
     tools=[make_mcp_toolset(tool_filter=["get_peer_comparison"])],
     output_key="competitive_report",

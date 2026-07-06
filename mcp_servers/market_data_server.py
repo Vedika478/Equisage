@@ -395,78 +395,18 @@ def get_recent_news(symbol: str) -> str:
                     "link": link,
                 })
 
-            return json.dumps({
-                "symbol": symbol,
-                "source": "yfinance",
-                "count": len(news_items),
-                "news": news_items,
-            })
-
-        # ---------------------------------------------------------------
-        # Fallback: structured mock data (clearly labelled)
-        # ---------------------------------------------------------------
-        company_map = {
-            "RELIANCE.NS": "Reliance Industries",
-            "TCS.NS": "Tata Consultancy Services",
-            "INFY.NS": "Infosys",
-            "HDFC.NS": "HDFC Bank",
-            "WIPRO.NS": "Wipro",
-            "ONGC.NS": "ONGC",
-            "BPCL.NS": "BPCL",
-        }
-        company = company_map.get(symbol.upper(), symbol.split(".")[0])
-        mock_news = [
-            {
-                "title": f"{company} Q4 Results: Revenue beats estimates by 3%",
-                "publisher": "[MOCK] Economic Times",
-                "published_at": "2025-04-15T09:30:00Z",
-                "link": "",
-                "is_mock": True,
-            },
-            {
-                "title": f"{company} announces strategic partnership to expand digital capabilities",
-                "publisher": "[MOCK] Business Standard",
-                "published_at": "2025-04-10T11:00:00Z",
-                "link": "",
-                "is_mock": True,
-            },
-            {
-                "title": f"Analysts raise {company} target price citing strong order book",
-                "publisher": "[MOCK] Moneycontrol",
-                "published_at": "2025-04-08T08:00:00Z",
-                "link": "",
-                "is_mock": True,
-            },
-            {
-                "title": f"{company} management reiterates double-digit growth guidance for FY26",
-                "publisher": "[MOCK] NDTV Profit",
-                "published_at": "2025-04-05T14:00:00Z",
-                "link": "",
-                "is_mock": True,
-            },
-        ]
         return json.dumps({
             "symbol": symbol,
-            "source": "MOCK_FALLBACK",
-            "note": "yfinance returned no news for this ticker. Mock news used for pipeline demonstration.",
-            "count": len(mock_news),
-            "news": mock_news,
+            "source": "yfinance",
+            "count": len(news_items) if 'news_items' in locals() else 0,
+            "news": news_items if 'news_items' in locals() else [],
         })
 
     except Exception as exc:
         return json.dumps({
             "symbol": symbol,
-            "source": "MOCK_FALLBACK",
             "error": str(exc),
-            "note": "News fetch failed. Using mock data so pipeline can continue.",
-            "news": [
-                {
-                    "title": f"[MOCK] {symbol} maintains stable operational metrics in Q4",
-                    "publisher": "[MOCK] Market Data",
-                    "published_at": datetime.now().isoformat(),
-                    "is_mock": True,
-                }
-            ],
+            "news": [],
         })
 
 

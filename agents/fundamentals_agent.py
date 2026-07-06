@@ -18,6 +18,7 @@ _SKILL_PATH = os.path.join(
 with open(_SKILL_PATH, encoding="utf-8") as f:
     _SKILL_INSTRUCTION = f.read()
 
+# Append state-injection prompt so the agent knows which symbol to analyse
 _INSTRUCTION = _SKILL_INSTRUCTION + """
 
 ---
@@ -30,11 +31,11 @@ CRITICAL tool-calling rules:
 - Your report MUST be extremely concise, structured in brief bullet points, and strictly under 150 words total. Do not write conversational filler or long paragraphs.
 """
 
-from google.adk.models.lite_llm import LiteLlm
+from agents.llm_config import get_robust_llm
 
 fundamentals_agent = LlmAgent(
     name="FundamentalsAgent",
-    model=LiteLlm(model="groq/llama-3.3-70b-versatile", num_retries=5),
+    model=get_robust_llm(),
     instruction=_INSTRUCTION,
     tools=[make_mcp_toolset(tool_filter=["get_financials"])],
     output_key="fundamentals_report",

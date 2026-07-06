@@ -146,12 +146,7 @@ class TestFullPipeline:
                 app_name="equisage_test",
                 user_id="test_user",
                 session_id=session_id,
-                state={
-                    "symbol": symbol,
-                    "sector": sector,
-                    "peers": peers,
-                    "compliance_feedback": "None. This is the first analysis pass."
-                },
+                state={"symbol": symbol, "sector": sector, "peers": peers},
             )
 
         asyncio.run(_create())

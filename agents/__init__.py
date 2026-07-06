@@ -1,1 +1,3 @@
-# Agents package
+"""
+EquiSage Agents Package
+"""
