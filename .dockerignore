@@ -1,0 +1,10 @@
+node_modules/
+frontend/dist/
+__pycache__/
+*.pyc
+.env
+.git/
+.github/
+chroma_db/
+scratch/
+test_hdfc.json
