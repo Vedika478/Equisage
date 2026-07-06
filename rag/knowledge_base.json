@@ -1,0 +1,154 @@
+{
+  "macro_knowledge": [
+    {
+      "id": "macro_001",
+      "category": "monetary_policy",
+      "text": "RBI raised the repo rate to 6.5% in June 2026, marking the third consecutive hike to combat persistent inflation above the 6% target. This tightening cycle is expected to increase borrowing costs across sectors."
+    },
+    {
+      "id": "macro_002",
+      "category": "gdp_growth",
+      "text": "India's GDP growth is projected at 6.8% for FY 2026-27, down from 7.2% in the previous year. Slower growth is attributed to global headwinds and domestic rate hikes impacting consumption."
+    },
+    {
+      "id": "macro_003",
+      "category": "inflation",
+      "text": "Retail inflation (CPI) stood at 6.2% in June 2026, driven by food prices and fuel costs. Core inflation remained elevated at 5.1%, keeping pressure on RBI to maintain hawkish stance."
+    },
+    {
+      "id": "macro_004",
+      "category": "sector_performance",
+      "text": "NSE energy sector outperformed the broader Nifty 50 by 8% in Q2 2026, benefiting from rising crude oil prices and strong refining margins. Reliance Industries led the rally."
+    },
+    {
+      "id": "macro_005",
+      "category": "sector_performance",
+      "text": "IT services sector faced margin pressure in H1 2026 due to wage inflation and cautious client spending in BFSI verticals. TCS and Infosys reported flat revenue growth QoQ."
+    },
+    {
+      "id": "macro_006",
+      "category": "banking",
+      "text": "Private banks maintained asset quality with gross NPA ratios below 3% as of June 2026. However, rising rates are compressing NIMs, with HDFC Bank flagging margin pressure in recent earnings call."
+    },
+    {
+      "id": "macro_007",
+      "category": "nbfc",
+      "text": "NBFCs face twin headwinds: rising funding costs from bank rate hikes and asset quality stress in unsecured lending portfolios. Cholamandalam and Bajaj Finance reported moderation in AUM growth."
+    },
+    {
+      "id": "macro_008",
+      "category": "policy",
+      "text": "Government's Production Linked Incentive (PLI) scheme for electronics manufacturing is attracting $15B in investments. This is expected to boost manufacturing GDP contribution from 17% to 20% by 2027."
+    },
+    {
+      "id": "macro_009",
+      "category": "markets",
+      "text": "Foreign portfolio investors (FPI) withdrew $4.2B from Indian equities in Q2 2026 due to Fed rate uncertainty and strong dollar. Domestic institutional investors (DII) absorbed the selling, supporting Nifty at 23,000 levels."
+    },
+    {
+      "id": "macro_010",
+      "category": "currency",
+      "text": "INR depreciated 2.3% against USD in H1 2026, trading at 83.5 levels. RBI intervened to prevent sharp volatility, drawing down forex reserves by $8B to $615B."
+    },
+    {
+      "id": "macro_011",
+      "category": "energy",
+      "text": "Brent crude averaged $88/barrel in Q2 2026, up 12% YoY. India's oil import bill increased, widening the current account deficit to 1.8% of GDP. Refining margins remain robust for integrated players like Reliance."
+    },
+    {
+      "id": "macro_012",
+      "category": "telecom",
+      "text": "5G subscriber base in India crossed 50 million in June 2026, with Jio capturing 45% market share. ARPU improvements are evident, but capex intensity remains high for telcos."
+    },
+    {
+      "id": "macro_013",
+      "category": "consumption",
+      "text": "Rural demand showed signs of recovery in Q2 2026 after two weak quarters. Monsoon forecast is favorable, which could support tractor sales, FMCG volumes, and two-wheeler demand in H2."
+    },
+    {
+      "id": "macro_014",
+      "category": "real_estate",
+      "text": "Urban housing sales volumes grew 18% YoY in Jan-Jun 2026, driven by metro cities. However, rising home loan rates (now at 9.2% average) are starting to dampen affordability."
+    },
+    {
+      "id": "macro_015",
+      "category": "auto",
+      "text": "Passenger vehicle sales remained flat in H1 2026 due to high waiting periods and semiconductor supply constraints. EV penetration reached 7% of total sales, up from 4% a year ago."
+    },
+    {
+      "id": "macro_016",
+      "category": "pharma",
+      "text": "Indian pharma exports to the US grew 9% YoY in Q1 2026, supported by biosimilar launches. However, pricing pressure in generic formulations remains a concern for revenue growth."
+    },
+    {
+      "id": "macro_017",
+      "category": "commodities",
+      "text": "Steel prices corrected 7% from Q1 peaks due to weak demand from real estate and infrastructure segments. Tata Steel and JSW flagged EBITDA margin compression."
+    },
+    {
+      "id": "macro_018",
+      "category": "technology",
+      "text": "India's semiconductor policy aims to establish 3 fab units by 2028 with $10B government subsidy. This could create domestic value chains for electronics and reduce import dependence."
+    },
+    {
+      "id": "macro_019",
+      "category": "infrastructure",
+      "text": "Government's capital expenditure on infrastructure is budgeted at ₹10 lakh crore for FY 2026-27, a 15% increase YoY. Roads, railways, and metro projects are key beneficiaries."
+    },
+    {
+      "id": "macro_020",
+      "category": "markets",
+      "text": "Nifty 50 forward PE ratio stands at 21x as of July 2026, above the 5-year average of 19x. Mid-cap and small-cap valuations are stretched at 28x and 32x respectively, raising correction risks."
+    },
+    {
+      "id": "macro_021",
+      "category": "banking",
+      "text": "Credit growth in the banking system moderated to 14% YoY in June 2026 from 16% in March. Corporate loan growth remains tepid while retail loans (especially housing and vehicle finance) drive credit expansion."
+    },
+    {
+      "id": "macro_022",
+      "category": "insurance",
+      "text": "Life insurance new business premium grew 12% YoY in H1 2026, with ULIP products gaining traction. Regulatory push for pension penetration is creating long-term growth opportunities."
+    },
+    {
+      "id": "macro_023",
+      "category": "agriculture",
+      "text": "Kharif sowing area was 8% higher than normal as of early July 2026, supported by timely monsoon arrival. This bodes well for rural income and allied sectors like agrochemicals and tractors."
+    },
+    {
+      "id": "macro_024",
+      "category": "trade",
+      "text": "India's merchandise exports grew 6% YoY to $220B in H1 2026, with engineering goods and pharma leading. Import growth slowed to 4% due to softer gold demand and import curbs on electronics."
+    },
+    {
+      "id": "macro_025",
+      "category": "fiscal",
+      "text": "Central government's fiscal deficit for FY 2026-27 is targeted at 5.1% of GDP, down from 5.6% in FY 2025-26. GST collections remain robust, averaging ₹1.65 lakh crore per month."
+    },
+    {
+      "id": "macro_026",
+      "category": "employment",
+      "text": "Urban unemployment rate declined to 6.8% in Q1 2026 from 7.2% in Q4 2025. However, labor force participation rate remains subdued at 47%, indicating structural challenges."
+    },
+    {
+      "id": "macro_027",
+      "category": "startup",
+      "text": "Indian startup funding fell 35% YoY in H1 2026 to $6.5B, impacted by global VC caution. Late-stage rounds dried up, forcing several unicorns to defer IPO plans."
+    },
+    {
+      "id": "macro_028",
+      "category": "climate",
+      "text": "India committed to achieve 50% of electricity generation from renewable sources by 2030. Solar capacity additions are running at 15 GW annually, attracting investments from Adani Green, Tata Power, and NTPC."
+    },
+    {
+      "id": "macro_029",
+      "category": "geopolitics",
+      "text": "India-US trade talks progressed in Q2 2026, focusing on tariff reductions in agriculture and services. A bilateral agreement could boost pharma and IT services exports."
+    },
+    {
+      "id": "macro_030",
+      "category": "demographics",
+      "text": "India's per capita income crossed $2,800 in FY 2025-26, with middle-class consumption driving demand for discretionary goods, travel, and financial services."
+    }
+  ]
+}
